@@ -11,17 +11,20 @@ class App extends Component {
   }
 
   render() {
+    const { currentUser } = this.state
+
     return (
       <div className="App">
-      <Login currentUser={this.state.currentUser.id} onUserChange={this.handleUserChange} />
-      {/*
-      <header className="App-header">
-        <p>
-          test
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-      </header>
-      */}
+      {
+        currentUser.id ? 
+          <header className="App-header">
+          <p>
+            You are logged in as {currentUser.name}.
+          </p>
+        </header>
+        : 
+        <Login currentUser={this.state.currentUser.id} onUserChange={this.handleUserChange} />
+      }
     </div>
     );
   }

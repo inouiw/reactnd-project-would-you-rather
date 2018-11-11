@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -10,10 +10,16 @@ import * as data from '../utils/_DATA'
 const styles = theme => ({
   root: {
     display: 'flex',
-    flexWrap: 'wrap',
-    'justify-content': 'center',
-    'align-items': 'center',
-    height: '90%',
+    'flex-flow': 'row wrap',
+    height: '100%',
+  },
+  form: {
+    margin: 'auto',
+  },
+  footer: {
+    'align-self': 'flex-end',
+    margin: 10,
+    width: '100%',
   },
   formControl: {
     margin: theme.spacing.unit,
@@ -45,8 +51,8 @@ class Login extends Component {
     const { users } = this.state;
 
     return (
-      <Fragment>
-        <form className={classes.root} autoComplete="off">
+      <div className={classes.root}>
+        <form className={classes.form} autoComplete="off">
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="user">User</InputLabel>
             <Select
@@ -65,7 +71,7 @@ class Login extends Component {
           </FormControl>
         </form>
 
-        <div>
+        <div className={classes.footer}>
           Icons made by
           <a href="https://www.flaticon.com/authors/freepik" title="Man">Man</a>
           from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
@@ -73,7 +79,7 @@ class Login extends Component {
           <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC 3.0 BY</a>
         </div>
 
-      </Fragment>
+      </div>
     )
   }
 }
