@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 
 class App extends Component {
   render() {
@@ -7,6 +6,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <p>
+            test
             Edit <code>src/App.js</code> and save to reload.
           </p>
         </header>
