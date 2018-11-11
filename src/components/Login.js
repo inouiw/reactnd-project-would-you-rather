@@ -12,6 +12,8 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     'justify-content': 'center',
+    'align-items': 'center',
+    height: '90%',
   },
   formControl: {
     margin: theme.spacing.unit,
