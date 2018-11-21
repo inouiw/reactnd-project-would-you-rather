@@ -26,10 +26,16 @@ class App extends Component {
     })
   }
 
-  handleUserChange = (user) => {
+  onUserChange = (user) => {
     this.setState({
       currentUser: user
     });
+  }
+
+  onLogout = () => {
+    this.setState({
+      currentUser: undefined,
+    })
   }
 
   render() {
@@ -41,13 +47,11 @@ class App extends Component {
       {
         currentUser ? 
           <header className="App-header">
-            <QuestionsAppBar questions={questions} currentUserId={currentUser.id} />
-            <p>
-              You are logged in as {currentUser.name}.
-            </p>
+            <QuestionsAppBar questions={questions} currentUserId={currentUser.id} 
+              currentUserName={currentUser.name} onLogout={this.onLogout} />
         </header>
         : 
-        <Login currentUserId={currentUser && currentUser.id} onUserChange={this.handleUserChange} />
+        <Login currentUserId={currentUser && currentUser.id} onUserChange={this.onUserChange} />
       }
     </div>
     );
