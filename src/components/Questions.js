@@ -16,7 +16,7 @@ class Questions extends Component {
         <List component="nav">
         {
           questions.map(q => (
-            <ListItem button>
+            <ListItem key={q.id} button>
               <ListItemText primary={formatQuestion(q.optionOne.text, q.optionTwo.text)} />
             </ListItem>
           ))

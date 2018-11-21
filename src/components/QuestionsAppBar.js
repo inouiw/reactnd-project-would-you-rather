@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from 'react'
+import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import { withStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
 import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
+import { withStyles } from '@material-ui/core/styles'
+import { logout } from '../actions/authedUser'
 import Questions from './Questions'
 
 // returns an array of question values containing all unanswered questions of the provided user.
@@ -36,12 +38,16 @@ class QuestionsAppBar extends Component {
   }
 
   handleLogout = (event) => {
-    this.props.onLogout()
+    this.props.dispatch(logout())
   }
 
   render() {
     const { selectedTab } = this.state
     const { classes, questions, currentUserId, currentUserName } = this.props
+
+    if (!currentUserId) {
+      return <Redirect to='/login' />
+    }
 
     return (
       <Fragment>
@@ -64,4 +70,12 @@ class QuestionsAppBar extends Component {
   }
 }
 
-export default withStyles(styles)(QuestionsAppBar);
+function mapStateToProps({ questions, authedUser }) {
+  return {
+    questions: questions,
+    currentUserId: authedUser && authedUser.id,
+    currentUserName: authedUser && authedUser.name,
+  }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(QuestionsAppBar))

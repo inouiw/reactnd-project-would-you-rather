@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { withStyles } from '@material-ui/core/styles'
 import Login from './Login'
 import QuestionsAppBar from './QuestionsAppBar'
-import * as data from '../utils/_DATA'
+import { loadQuestions } from '../actions/questions'
 
 const styles = theme => ({
   root: {
@@ -13,49 +15,22 @@ const styles = theme => ({
 });
 
 class App extends Component {
-  state = { 
-    currentUser: undefined,
-    questions: {},
-  }
-
   componentDidMount() {
-    data._getQuestions().then(questions => {
-      this.setState({
-        questions
-      });
-    })
-  }
-
-  onUserChange = (user) => {
-    this.setState({
-      currentUser: user
-    });
-  }
-
-  onLogout = () => {
-    this.setState({
-      currentUser: undefined,
-    })
+    this.props.dispatch(loadQuestions())
   }
 
   render() {
-    const { currentUser, questions } = this.state
     const { classes } = this.props;
 
     return (
-      <div className={classes.root}>
-      {
-        currentUser ? 
-          <header className="App-header">
-            <QuestionsAppBar questions={questions} currentUserId={currentUser.id} 
-              currentUserName={currentUser.name} onLogout={this.onLogout} />
-        </header>
-        : 
-        <Login currentUserId={currentUser && currentUser.id} onUserChange={this.onUserChange} />
-      }
-    </div>
+      <Router>
+        <div className={classes.root}>
+          <Route exact path="/" component={QuestionsAppBar} />
+          <Route path="/login" component={Login} />
+        </div>
+    </Router>
     );
   }
 }
 
-export default withStyles(styles)(App);
+export default connect()(withStyles(styles)(App))

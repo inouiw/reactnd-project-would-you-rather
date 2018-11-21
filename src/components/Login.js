@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Avatar from '@material-ui/core/Avatar';
-import * as data from '../utils/_DATA'
+import { loadUsers } from '../actions/users'
+import { setAuthedUser } from '../actions/authedUser'
 
 const styles = theme => ({
   root: {
@@ -28,27 +30,21 @@ const styles = theme => ({
 });
 
 class Login extends Component {
-  state = {
-    users: {}
-  };
-
   componentDidMount() {
-    data._getUsers().then(users => {
-      this.setState({
-        users
-      });
-    })
+    this.props.dispatch(loadUsers())
   }
 
   handleChange = event => {
     const userId = event.target.value
-    const user = this.state.users[userId]
-    this.props.onUserChange(user)
+    const user = this.props.users[userId]
+    
+    this.props.dispatch(setAuthedUser(user))
+    this.props.history.push('/');
   };
 
   render() {
-    const { classes, currentUserId='' } = this.props;
-    const { users } = this.state;
+    const { classes, users } = this.props
+    const currentUserId = this.props.currentUserId || ''
 
     return (
       <div className={classes.root}>
@@ -84,4 +80,11 @@ class Login extends Component {
   }
 }
 
-export default withStyles(styles)(Login)
+function mapStateToProps({ authedUser, users }) {
+  return {
+    currentUserId: authedUser && authedUser.id,
+    users,
+  }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(Login))
