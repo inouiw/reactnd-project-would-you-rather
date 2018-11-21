@@ -42,12 +42,12 @@ class Login extends Component {
 
   handleChange = event => {
     const userId = event.target.value
-    const userName = this.state.users[userId].name
-    this.props.onUserChange(userId, userName)
+    const user = this.state.users[userId]
+    this.props.onUserChange(user)
   };
 
   render() {
-    const { classes, currentUser='' } = this.props;
+    const { classes, currentUserId='' } = this.props;
     const { users } = this.state;
 
     return (
@@ -56,7 +56,7 @@ class Login extends Component {
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="user">User</InputLabel>
             <Select
-              value={currentUser}
+              value={currentUserId}
               onChange={this.handleChange}
               autoWidth={true}
               inputProps={{
