@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import Avatar from '@material-ui/core/Avatar';
-import { loadUsers } from '../actions/users'
+import { withStyles } from '@material-ui/core/styles'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import Avatar from '@material-ui/core/Avatar'
 import { setAuthedUser } from '../actions/authedUser'
 
 const styles = theme => ({
@@ -30,10 +29,6 @@ const styles = theme => ({
 });
 
 class Login extends Component {
-  componentDidMount() {
-    this.props.dispatch(loadUsers())
-  }
-
   handleChange = event => {
     const userId = event.target.value
     const user = this.props.users[userId]

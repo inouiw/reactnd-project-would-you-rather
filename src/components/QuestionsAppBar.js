@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
@@ -10,16 +9,18 @@ import { withStyles } from '@material-ui/core/styles'
 import { logout } from '../actions/authedUser'
 import Questions from './Questions'
 
-// returns an array of question values containing all unanswered questions of the provided user.
-function filterUnansweredQuestions(questions, currentUserId) {
-  return Object.values(questions).filter(q => q.optionOne.votes.includes(currentUserId)
-    || q.optionTwo.votes.includes(currentUserId))
-}
-
 // returns an array of question values containing all answered questions of the provided user.
 function filterAnsweredQuestions(questions, currentUserId) {
+  return Object.values(questions).filter(q => q.optionOne.votes.includes(currentUserId)
+    || q.optionTwo.votes.includes(currentUserId))
+    .sort((a, b) => b.timestamp - a.timestamp)
+}
+
+// returns an array of question values containing all unanswered questions of the provided user.
+function filterUnansweredQuestions(questions, currentUserId) {
   return Object.values(questions).filter(q => !q.optionOne.votes.includes(currentUserId)
     && !q.optionTwo.votes.includes(currentUserId))
+    .sort((a, b) => b.timestamp - a.timestamp)
 }
 
 const styles = theme => ({
@@ -43,11 +44,7 @@ class QuestionsAppBar extends Component {
 
   render() {
     const { selectedTab } = this.state
-    const { classes, questions, currentUserId, currentUserName } = this.props
-
-    if (!currentUserId) {
-      return <Redirect to='/login' />
-    }
+    const { classes, questions, authedUser } = this.props
 
     return (
       <Fragment>
@@ -58,13 +55,13 @@ class QuestionsAppBar extends Component {
               <Tab value='answeredTab' label="Answered" />
             </Tabs>
             <div className={classes.grow} />
-            <div>{currentUserName}</div>
+            <div>{authedUser.name}</div>
             <Button color="inherit" onClick={this.handleLogout}>Logout</Button>
           </Toolbar>
         </AppBar>
 
-        {selectedTab === 'unansweredTab' && <Questions questions={filterUnansweredQuestions(questions, currentUserId)} />}
-        {selectedTab === 'answeredTab' && <Questions questions={filterAnsweredQuestions(questions, currentUserId)} />}
+        {selectedTab === 'unansweredTab' && <Questions questions={filterUnansweredQuestions(questions, authedUser.id)} />}
+        {selectedTab === 'answeredTab' && <Questions questions={filterAnsweredQuestions(questions, authedUser.id)} />}
       </Fragment>
     );
   }
@@ -73,8 +70,7 @@ class QuestionsAppBar extends Component {
 function mapStateToProps({ questions, authedUser }) {
   return {
     questions: questions,
-    currentUserId: authedUser && authedUser.id,
-    currentUserName: authedUser && authedUser.name,
+    authedUser: authedUser,
   }
 }
 
