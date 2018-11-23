@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import List from '@material-ui/core/List'
 import ListItemLink from './ListItemLink'
-
-function formatQuestion(optionA, optionB) {
-  return `Would you rather ${optionA} or ${optionB}?`
-}
+import { formatQuestion } from '../utils/format'
 
 class Questions extends Component {
   render() {

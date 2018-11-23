@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import Toolbar from '@material-ui/core/Toolbar'
-import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 import { logout } from '../actions/authedUser'
 import Questions from './Questions'
@@ -48,16 +46,11 @@ class QuestionsAppBar extends Component {
 
     return (
       <Fragment>
-        <AppBar position="static">
-          <Toolbar>
-            <Tabs value={selectedTab} onChange={this.handleChange}>
-              <Tab value='unansweredTab' label="Unanswered" />
-              <Tab value='answeredTab' label="Answered" />
-            </Tabs>
-            <div className={classes.grow} />
-            <div>{authedUser.name}</div>
-            <Button color="inherit" onClick={this.handleLogout}>Logout</Button>
-          </Toolbar>
+        <AppBar position="static" color="default">
+          <Tabs value={selectedTab} onChange={this.handleChange}>
+            <Tab value='unansweredTab' label="Unanswered" />
+            <Tab value='answeredTab' label="Answered" />
+          </Tabs>
         </AppBar>
 
         {selectedTab === 'unansweredTab' && <Questions questions={filterUnansweredQuestions(questions, authedUser.id)} />}

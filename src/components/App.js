@@ -4,11 +4,14 @@ import { BrowserRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Login from './Login'
-import QuestionsAppBar from './QuestionsAppBar'
+import NavBar from './NavBar'
+import QuestionTabs from './QuestionTabs'
 import QuestionDetails from './QuestionDetails'
 import AuthorizedRoute from './AuthorizedRoute'
 import { loadQuestions } from '../actions/questions'
 import { loadUsers } from '../actions/users'
+import { setAuthedUser } from '../actions/authedUser'
+import * as data from '../utils/_DATA'
 
 const styles = theme => ({
   root: {
@@ -20,8 +23,14 @@ const styles = theme => ({
 
 class App extends Component {
   componentDidMount() {
+    // see https://material-ui.com/style/typography/#migration-to-typography-v2
+    window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true
+
     this.props.dispatch(loadQuestions())
     this.props.dispatch(loadUsers())
+
+    // for development only
+    data._getUsers().then(users => this.props.dispatch(setAuthedUser(users['sarahedo'])))
   }
 
   render() {
@@ -30,10 +39,11 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className={classes.root}>
+          <NavBar />
           <Switch>
               <Route path="/login" component={Login} />
               <AuthorizedRoute path="/questions/:id" component={QuestionDetails} />
-              <AuthorizedRoute exact path="/" component={QuestionsAppBar} />
+              <AuthorizedRoute exact path="/" component={QuestionTabs} />
               <Route render={() => <h1>Page not found</h1>} />
           </Switch>
         </div>

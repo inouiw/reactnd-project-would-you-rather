@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -26,7 +27,7 @@ const styles = theme => ({
     margin: theme.spacing.unit,
     minWidth: 120,
   },
-});
+})
 
 class Login extends Component {
   handleChange = event => {
@@ -34,12 +35,16 @@ class Login extends Component {
     const user = this.props.users[userId]
     
     this.props.dispatch(setAuthedUser(user))
-    this.props.history.push('/');
-  };
+  }
 
   render() {
     const { classes, users } = this.props
-    const currentUserId = this.props.currentUserId || ''
+    const authedUserId = this.props.authedUserId || ''
+
+    // User is logged in. Redirect to start page.
+    if (authedUserId) {
+      return <Redirect to="/" />
+    }
 
     return (
       <div className={classes.root}>
@@ -47,7 +52,7 @@ class Login extends Component {
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="user">User</InputLabel>
             <Select
-              value={currentUserId}
+              value={authedUserId}
               onChange={this.handleChange}
               autoWidth={true}
               inputProps={{
@@ -77,7 +82,7 @@ class Login extends Component {
 
 function mapStateToProps({ authedUser, users }) {
   return {
-    currentUserId: authedUser && authedUser.id,
+    authedUserId: authedUser && authedUser.id,
     users,
   }
 }
