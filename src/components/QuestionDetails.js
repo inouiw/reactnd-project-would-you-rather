@@ -82,18 +82,14 @@ class QuestionDetails extends Component {
     const { classes, questionId, questions, users, authedUserId } = this.props
     const question = questions[questionId]
 
-    if (!question || !authedUserId) {
-      return <div>!question || !authedUserId</div>
+    if (!question) {
+      return <div>Error: There is no question with id: "{questionId}"</div>
     }
 
     const isOption1 = question.optionOne.votes.includes(authedUserId)
     const isOption2 = question.optionTwo.votes.includes(authedUserId)
     const isAnswered = isOption1 || isOption2
     const questionAuthor = users[question.author]
-
-    if (!questionAuthor) {
-      return <div>no questionAuthor</div>
-    }
 
     const votesOption1 = question.optionOne.votes.length
     const votesOption2 = question.optionTwo.votes.length

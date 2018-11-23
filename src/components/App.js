@@ -8,6 +8,7 @@ import NavBar from './NavBar'
 import QuestionTabs from './QuestionTabs'
 import QuestionDetails from './QuestionDetails'
 import AuthorizedRoute from './AuthorizedRoute'
+import Add from './Add'
 import { loadQuestions } from '../actions/questions'
 import { loadUsers } from '../actions/users'
 
@@ -38,6 +39,7 @@ class App extends Component {
           <Switch>
               <Route path="/login" component={Login} />
               <AuthorizedRoute path="/questions/:id" component={QuestionDetails} />
+              <AuthorizedRoute path="/add" component={Add} />
               <AuthorizedRoute exact path="/" component={QuestionTabs} />
               <Route render={() => <h1>Page not found</h1>} />
           </Switch>

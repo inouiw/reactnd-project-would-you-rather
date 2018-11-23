@@ -24,3 +24,10 @@ export function saveQuestionAnswer(authedUserId, qid, answer) {
     .then(() => dispatch(loadQuestions()) && dispatch(loadUsers()))
   }
 }
+
+export function saveQuestion(optionOneText, optionTwoText, authedUserId) {
+  return (dispatch) => {
+    data._saveQuestion({ optionOneText, optionTwoText, author: authedUserId })
+    .then(() => dispatch(loadQuestions()))
+  }
+}
