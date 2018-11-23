@@ -10,8 +10,7 @@ import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import Typography from '@material-ui/core/Typography'
+import { saveQuestionAnswer } from '../actions/questions'
 
 const styles = theme => ({
   root: {
@@ -26,17 +25,17 @@ const styles = theme => ({
   circle: {
     width: "1.5em",
     height: "1.5em",
-    "border-radius": "0.75em",
-    "font-size": "1em",
+    borderRadius: "0.75em",
+    fontSize: "1em",
     color: "#fff",
-    "line-height": "1.5em",
-    "text-align": "center",
+    lineHeight: "1.5em",
+    textAlign: "center",
     background: "#2196f3",
     display: 'inline-block',
-    },
-    answeredRoot: {
-      margin: 24
-    },
+  },
+  answeredRoot: {
+    margin: 24
+  },
 })
 
 const Circle = withStyles(styles)(props => {
@@ -46,19 +45,19 @@ const Circle = withStyles(styles)(props => {
 const AnsweredListItem = withStyles(styles)(props => {
   const { isBorder, votes, votePercent, text } = props
   const style = {
-    "margin-left": -5, 
+    marginLeft: -5, 
     padding: 5, 
     border: isBorder ? "2px solid black" : "none", 
-    "border-radius": 15
+    borderRadius: 15
   }
   return (
     <ListItem>
       <div style={style}>
         <Circle value={votes} />
-        <span style={{"margin-left": 6, "min-width": "4ch", "display": "inline-block"}}>
+        <span style={{marginLeft: 6, minWidth: "4ch", display: "inline-block"}}>
           {votePercent + "% "}
         </span>
-        <span style={{"margin-left": 12}}>
+        <span style={{marginLeft: 12}}>
           {text}
         </span>
       </div>
@@ -75,19 +74,20 @@ class QuestionDetails extends Component {
   }
 
   handleAnswer = event => {
-    alert('thanks')
+    const { questionId, authedUserId, dispatch } = this.props
+    dispatch(saveQuestionAnswer(authedUserId, questionId, this.state.value))
   }
 
   render() {
-    const { classes, questionId, questions, users, authedUser } = this.props
+    const { classes, questionId, questions, users, authedUserId } = this.props
     const question = questions[questionId]
 
-    if (!question || !authedUser) {
-      return <div>!question || !authedUser</div>
+    if (!question || !authedUserId) {
+      return <div>!question || !authedUserId</div>
     }
 
-    const isOption1 = question.optionOne.votes.includes(authedUser.id)
-    const isOption2 = question.optionTwo.votes.includes(authedUser.id)
+    const isOption1 = question.optionOne.votes.includes(authedUserId)
+    const isOption2 = question.optionTwo.votes.includes(authedUserId)
     const isAnswered = isOption1 || isOption2
     const questionAuthor = users[question.author]
 
@@ -138,13 +138,13 @@ class QuestionDetails extends Component {
     }
 }
 
-function mapStateToProps({ questions, users, authedUser }, props) {
+function mapStateToProps({ questions, users, authedUserId }, props) {
   const questionId = props.match && props.match.params && props.match.params.id
   return {
     questionId,
     questions,
     users,
-    authedUser,
+    authedUserId,
   }
 }
 

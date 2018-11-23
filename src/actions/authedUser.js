@@ -7,9 +7,9 @@ export function logout() {
   }
 }
 
-export function setAuthedUser(user) {
+export function setAuthedUser(authedUserId) {
   return {
     type: SET_AUTHED_USER,
-    user,
+    authedUserId,
   }
 }

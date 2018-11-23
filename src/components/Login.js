@@ -31,19 +31,17 @@ const styles = theme => ({
 
 class Login extends Component {
   handleChange = event => {
-    const userId = event.target.value
-    const user = this.props.users[userId]
-    
-    this.props.dispatch(setAuthedUser(user))
+    const authedUserId = event.target.value
+    this.props.dispatch(setAuthedUser(authedUserId))
   }
 
   render() {
-    const { classes, users } = this.props
+    const { classes, users, referrer } = this.props
     const authedUserId = this.props.authedUserId || ''
 
-    // User is logged in. Redirect to start page.
+    // User is logged in. Redirect to referrer or start page.
     if (authedUserId) {
-      return <Redirect to="/" />
+      return <Redirect to={referrer || "/"} />
     }
 
     return (
@@ -80,10 +78,11 @@ class Login extends Component {
   }
 }
 
-function mapStateToProps({ authedUser, users }) {
+function mapStateToProps({ authedUserId, users }, props) {
   return {
-    authedUserId: authedUser && authedUser.id,
+    authedUserId,
     users,
+    referrer: props && props.location.state && props.location.state.referrer,
   }
 }
 

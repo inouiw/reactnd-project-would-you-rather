@@ -32,17 +32,17 @@ class QuestionsAppBar extends Component {
     selectedTab: 'unansweredTab'
   }
 
-  handleChange = (event, selectedTab) => {
+  handleChange = (_, selectedTab) => {
     this.setState({ selectedTab });
   }
 
-  handleLogout = (event) => {
+  handleLogout = (_) => {
     this.props.dispatch(logout())
   }
 
   render() {
     const { selectedTab } = this.state
-    const { classes, questions, authedUser } = this.props
+    const { questions, authedUserId } = this.props
 
     return (
       <Fragment>
@@ -53,17 +53,17 @@ class QuestionsAppBar extends Component {
           </Tabs>
         </AppBar>
 
-        {selectedTab === 'unansweredTab' && <Questions questions={filterUnansweredQuestions(questions, authedUser.id)} />}
-        {selectedTab === 'answeredTab' && <Questions questions={filterAnsweredQuestions(questions, authedUser.id)} />}
+        {selectedTab === 'unansweredTab' && <Questions questions={filterUnansweredQuestions(questions, authedUserId)} />}
+        {selectedTab === 'answeredTab' && <Questions questions={filterAnsweredQuestions(questions, authedUserId)} />}
       </Fragment>
     );
   }
 }
 
-function mapStateToProps({ questions, authedUser }) {
+function mapStateToProps({ questions, authedUserId }) {
   return {
-    questions: questions,
-    authedUser: authedUser,
+    questions,
+    authedUserId,
   }
 }
 

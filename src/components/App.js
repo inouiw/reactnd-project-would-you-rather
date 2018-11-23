@@ -10,8 +10,6 @@ import QuestionDetails from './QuestionDetails'
 import AuthorizedRoute from './AuthorizedRoute'
 import { loadQuestions } from '../actions/questions'
 import { loadUsers } from '../actions/users'
-import { setAuthedUser } from '../actions/authedUser'
-import * as data from '../utils/_DATA'
 
 const styles = theme => ({
   root: {
@@ -28,9 +26,6 @@ class App extends Component {
 
     this.props.dispatch(loadQuestions())
     this.props.dispatch(loadUsers())
-
-    // for development only
-    data._getUsers().then(users => this.props.dispatch(setAuthedUser(users['sarahedo'])))
   }
 
   render() {
@@ -52,9 +47,8 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ authedUser }) {
+function mapStateToProps({ authedUserId }) {
   return {
-    currentUserId: authedUser,
   }
 }
 

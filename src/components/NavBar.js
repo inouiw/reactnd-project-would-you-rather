@@ -20,7 +20,8 @@ class NavBar extends Component {
   }
 
   render() {
-    const { classes, authedUser, history } = this.props
+    const { classes, authedUserId, users, history } = this.props
+    const authedUser = authedUserId && users[authedUserId]
 
     return (
         <AppBar position="static" className={classes.root}>
@@ -30,7 +31,7 @@ class NavBar extends Component {
             </Button>
             <div className={classes.grow} />
             <div>{authedUser && authedUser.name}</div>
-            <Button color="inherit" onClick={this.handleLogout} disabled={!authedUser}>
+            <Button color="inherit" onClick={this.handleLogout} disabled={!authedUserId}>
               Logout
             </Button>
           </Toolbar>
@@ -39,9 +40,10 @@ class NavBar extends Component {
   }
 }
 
-function mapStateToProps({ authedUser }) {
+function mapStateToProps({ authedUserId, users }) {
   return {
-    authedUser: authedUser,
+    authedUserId,
+    users,
   }
 }
 

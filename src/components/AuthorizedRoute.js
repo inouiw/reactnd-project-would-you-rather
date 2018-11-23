@@ -14,16 +14,19 @@ class AuthorizedRoute extends Component {
         }
         return logged
           ? <Comp {...props} />
-          : <Redirect to="/login" />
+          : <Redirect to={{
+              pathname: "/login",
+              state: { referrer: this.props.location.pathname }
+            }} />
       }} />
     )
   }
 }
 
-const stateToProps = ({ authedUser }) => {
+const stateToProps = ({ authedUserId }) => {
   return {
     pending: false,
-    logged: authedUser !== null,
+    logged: authedUserId !== null,
   }
 }
 

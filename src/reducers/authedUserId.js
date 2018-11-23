@@ -1,14 +1,11 @@
 import { REMOVE_AUTHED_USER, SET_AUTHED_USER } from '../actions/authedUser'
 
-export default function authedUser(state = null, action) {
+export default function authedUserId(state = null, action) {
   switch(action.type) {
     case REMOVE_AUTHED_USER:
       return null
     case SET_AUTHED_USER:
-      return {
-        ...state,
-        ...action.user
-      }
+      return action.authedUserId
     default:
       return state;
   }
