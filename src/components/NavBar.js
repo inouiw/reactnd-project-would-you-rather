@@ -6,7 +6,11 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles'
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos'
+import Home from '@material-ui/icons/Home'
+import ThumbsUpDown from '@material-ui/icons/ThumbsUpDown'
+import Add from '@material-ui/icons/Add'
 import { logout } from '../actions/authedUser'
+import Tooltip from '@material-ui/core/Tooltip'
 
 const styles = theme => ({
   grow: {
@@ -26,9 +30,35 @@ class NavBar extends Component {
     return (
         <AppBar position="static" className={classes.root}>
           <Toolbar>
-            <Button color="inherit" onClick={history && history.goBack} disabled={history && history.length === 0}>
-              <ArrowBackIos />
-            </Button>
+            <Tooltip title="Back">
+              <div>
+                  <Button color="inherit" onClick={history && history.goBack} disabled={!authedUser || (history && history.length === 0)}>
+                    <ArrowBackIos />
+                  </Button>
+              </div>
+            </Tooltip>
+            <div className={classes.grow} />
+            <Tooltip title="Home">
+              <div>
+                <Button color="inherit" onClick={() => history && history.push('/')} disabled={!authedUser}>
+                  <Home />
+                </Button>
+              </div>
+            </Tooltip>
+            <Tooltip title="Leaderboard">
+              <div>
+                <Button color="inherit" onClick={() => history && history.push('/leaderboard')} disabled={!authedUser}>
+                  <ThumbsUpDown />
+                </Button>
+              </div>
+            </Tooltip>
+            <Tooltip title="Add Question">
+              <div>
+                <Button color="inherit" onClick={() => history && history.push('/add')} disabled={!authedUser}>
+                  <Add />
+                </Button>
+              </div>
+            </Tooltip>
             <div className={classes.grow} />
             <div>{authedUser && authedUser.name}</div>
             <Button color="inherit" onClick={this.handleLogout} disabled={!authedUserId}>

@@ -9,8 +9,10 @@ import QuestionTabs from './QuestionTabs'
 import QuestionDetails from './QuestionDetails'
 import AuthorizedRoute from './AuthorizedRoute'
 import Add from './Add'
+import Leaderboard from './Leaderboard'
 import { loadQuestions } from '../actions/questions'
 import { loadUsers } from '../actions/users'
+import { setDocumentSize } from '../actions/dom'
 
 const styles = theme => ({
   root: {
@@ -18,7 +20,7 @@ const styles = theme => ({
     height: '100%',
     backgroundColor: theme.palette.background.paper,
   },
-});
+})
 
 class App extends Component {
   componentDidMount() {
@@ -27,6 +29,13 @@ class App extends Component {
 
     this.props.dispatch(loadQuestions())
     this.props.dispatch(loadUsers())
+
+    // For responsive design, elements that depend on clientWidth, clientHeight 
+    // must rerender when the document is resized.
+    this.props.dispatch(setDocumentSize(document.documentElement.clientWidth, document.documentElement.clientHeight))
+    window.addEventListener('resize', () => {
+      this.props.dispatch(setDocumentSize(document.documentElement.clientWidth, document.documentElement.clientHeight))
+    })
   }
 
   render() {
@@ -40,6 +49,7 @@ class App extends Component {
               <Route path="/login" component={Login} />
               <AuthorizedRoute path="/questions/:id" component={QuestionDetails} />
               <AuthorizedRoute path="/add" component={Add} />
+              <AuthorizedRoute path="/leaderboard" component={Leaderboard} />
               <AuthorizedRoute exact path="/" component={QuestionTabs} />
               <Route render={() => <h1>Page not found</h1>} />
           </Switch>

@@ -7,6 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import Avatar from '@material-ui/core/Avatar'
+import Footer from './Footer'
 import { setAuthedUser } from '../actions/authedUser'
 
 const styles = theme => ({
@@ -17,11 +18,6 @@ const styles = theme => ({
   },
   form: {
     margin: 'auto',
-  },
-  footer: {
-    'align-self': 'flex-end',
-    margin: 10,
-    width: '100%',
   },
   formControl: {
     margin: theme.spacing.unit,
@@ -56,23 +52,16 @@ class Login extends Component {
               inputProps={{
                 id: 'user',
               }}>
-             {Object.values(users).map((user) => (
-                 <MenuItem key={user.id} value={user.id}>
-                   <Avatar src={user.avatarURL} className={classes.avatar} style={{marginRight: 10}} component='span' /> {user.name}
-                 </MenuItem>
-               ))}
+              {Object.values(users).map((user) => (
+                <MenuItem key={user.id} value={user.id}>
+                  <Avatar src={user.avatarURL} className={classes.avatar} style={{ marginRight: 10 }} component='span' /> {user.name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </form>
 
-        <div className={classes.footer}>
-          Icons made by
-          <a href="https://www.flaticon.com/authors/freepik" title="Man">Man</a>
-          from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-          is licensed by
-          <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC 3.0 BY</a>
-        </div>
-
+        <Footer />
       </div>
     )
   }

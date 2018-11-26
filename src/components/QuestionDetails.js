@@ -43,7 +43,7 @@ const Circle = withStyles(styles)(props => {
 })
 
 const AnsweredListItem = withStyles(styles)(props => {
-  const { isBorder, votes, votePercent, text } = props
+  const { isBorder, votes, votePercent, text, isLast } = props
   const style = {
     marginLeft: -5, 
     padding: 5, 
@@ -61,6 +61,9 @@ const AnsweredListItem = withStyles(styles)(props => {
           {text}
         </span>
       </div>
+      <span style={{marginLeft: 6}}>
+        { isLast ? "" : " or" }
+      </span>
     </ListItem>)
 })
 
@@ -102,8 +105,8 @@ class QuestionDetails extends Component {
           <Avatar src={questionAuthor.avatarURL} className={classes.avatar} style={{marginRight: 10}} component='span' />
           <span style={{color: "rgba(0, 0, 0, 0.54)"}}>Would You Rather</span>
           <List>
-            <AnsweredListItem isBorder={isOption1} votes={votesOption1} votePercent={votePercOption1} text={question.optionOne.text + " or"} />
-            <AnsweredListItem isBorder={isOption2} votes={votesOption2} votePercent={votePercOption2} text={question.optionTwo.text} />
+            <AnsweredListItem isBorder={isOption1} votes={votesOption1} votePercent={votePercOption1} text={question.optionOne.text} />
+            <AnsweredListItem isBorder={isOption2} votes={votesOption2} votePercent={votePercOption2} text={question.optionTwo.text} isLast={true} />
           </List>
         </div>
       )

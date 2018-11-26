@@ -24,7 +24,7 @@ function filterUnansweredQuestions(questions, currentUserId) {
 const styles = theme => ({
   grow: {
     flexGrow: 1,
-  }
+  },
 })
 
 class QuestionsAppBar extends Component {
@@ -42,14 +42,16 @@ class QuestionsAppBar extends Component {
 
   render() {
     const { selectedTab } = this.state
-    const { questions, authedUserId } = this.props
+    const { questions, authedUserId, classes } = this.props
 
     return (
       <Fragment>
         <AppBar position="static" color="default">
           <Tabs value={selectedTab} onChange={this.handleChange}>
+            <div className={classes.grow} />
             <Tab value='unansweredTab' label="Unanswered" />
             <Tab value='answeredTab' label="Answered" />
+            <div className={classes.grow} />
           </Tabs>
         </AppBar>
 
