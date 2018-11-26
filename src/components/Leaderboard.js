@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 import Avatar from '@material-ui/core/Avatar'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
@@ -32,15 +29,15 @@ const styles = theme => ({
     'flex-flow': 'row wrap',
     height: '100%',
     justifyContent: 'center',
+    alignItems: 'flex-start',
     marginTop: theme.spacing.unit * 3,
+
+
   },
   paper: {
-    minWidth: 600,
-    maxWidth: 800,
+    overflow: 'auto',
   },
   table: {
-    minWidth: 600,
-    maxWidth: 800,
   },
 })
 
@@ -48,55 +45,55 @@ class Leaderboard extends Component {
   render() {
     const { classes, users } = this.props
 
+    const usersOrdered = Object.values(users).sort((a, b) => {
+      const aQuestionAnswerCount = a.questions.length + Object.keys(a.answers).length
+      const bQuestionAnswerCount = b.questions.length + Object.keys(b.answers).length
+      return bQuestionAnswerCount - aQuestionAnswerCount
+    })
+
     return (
       <div className={classes.root}>
-        {/* <List>
-          { Object.values(users).map(user => (
-            <ListItem>
-              <Avatar src={user.avatarURL} className={classes.avatar} style={{ marginRight: 10 }} component='span' /> {user.name}
-              <ListItemText primary="Photos" />
-            </ListItem>
-          ))}
-        </List> */}
-        <div>
           <Paper className={classes.paper}>
             <Table className={classes.table} aria-labelledby="tableTitle">
               <TableHead>
                 <TableRow>
                   <CustomTableCell>
-                    test
-              </CustomTableCell>
+                    User
+                  </CustomTableCell>
                   <CustomTableCell>
-                    <Tooltip title="Sort">
+                    <Tooltip title="Sort by questions asked">
                       <TableSortLabel>
-                        test2
-                  </TableSortLabel>
+                        Questions asked
+                      </TableSortLabel>
+                    </Tooltip>
+                  </CustomTableCell>
+                  <CustomTableCell>
+                    <Tooltip title="Sort by questions answered">
+                      <TableSortLabel>
+                        Questions answered
+                      </TableSortLabel>
                     </Tooltip>
                   </CustomTableCell>
                 </TableRow>
               </TableHead>
 
               <TableBody>
-                <TableRow className={classes.row}>
+              { usersOrdered.map(user => (
+                <TableRow key={user.id} className={classes.row}>
                   <CustomTableCell>
-                    eins
-              </CustomTableCell>
+                    <Avatar src={user.avatarURL} className={classes.avatar} style={{ marginRight: 10 }} component='span' /> {user.name}
+                  </CustomTableCell>
                   <CustomTableCell>
-                    3
-              </CustomTableCell>
+                    {user.questions.length}
+                  </CustomTableCell>
+                  <CustomTableCell>
+                    {Object.keys(user.answers).length}
+                  </CustomTableCell>
                 </TableRow>
-                <TableRow className={classes.row}>
-                  <CustomTableCell>
-                    eins
-              </CustomTableCell>
-                  <CustomTableCell>
-                    3
-              </CustomTableCell>
-                </TableRow>
+              ))}
               </TableBody>
             </Table>
           </Paper>
-        </div>
 
         <Footer />
       </div>

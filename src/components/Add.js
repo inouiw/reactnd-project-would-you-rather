@@ -16,7 +16,7 @@ const styles = theme => ({
     display: 'flex',
     flexFlow: 'column wrap',
     margin: 24,
-    // minWidth set in render method //()minWidth: document.documentElement.clientWidth > 1000 ? 800 : 200,
+    // minWidth set in render method.
     maxWidth: 600,
   },
   formControl: {
