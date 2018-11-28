@@ -13,7 +13,7 @@ import { setAuthedUser } from '../actions/authedUser'
 const styles = theme => ({
   root: {
     display: 'flex',
-    'flex-flow': 'row wrap',
+    flexFlow: 'row wrap',
     height: '100%',
   },
   form: {

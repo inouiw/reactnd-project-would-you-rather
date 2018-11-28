@@ -34,7 +34,7 @@ const styles = theme => ({
     display: 'inline-block',
   },
   answeredRoot: {
-    margin: 24
+    margin: 24,
   },
 })
 
@@ -45,10 +45,10 @@ const Circle = withStyles(styles)(props => {
 const AnsweredListItem = withStyles(styles)(props => {
   const { isBorder, votes, votePercent, text, isLast } = props
   const style = {
-    marginLeft: -5, 
-    padding: 5, 
-    border: isBorder ? "2px solid black" : "none", 
-    borderRadius: 15
+    marginLeft: -5,
+    padding: 5,
+    border: isBorder ? "2px solid black" : "none",
+    borderRadius: 15,
   }
   return (
     <ListItem>

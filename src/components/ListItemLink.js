@@ -1,8 +1,8 @@
-// see https://material-ui.com/guides/composition/#caveat-with-inlining
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import ListItem from '@material-ui/core/ListItem'
 
+// see https://material-ui.com/guides/composition/#caveat-with-inlining
 class ListItemLink extends Component {
   renderLink = itemProps => <Link to={this.props.to} {...itemProps} />
 

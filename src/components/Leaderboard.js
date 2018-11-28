@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
@@ -24,7 +24,7 @@ const CustomTableCell = withStyles(theme => ({
 const styles = theme => ({
   root: {
     display: 'flex',
-    'flex-flow': 'row wrap',
+    flexFlow: 'row wrap',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'flex-start',
@@ -39,56 +39,52 @@ const styles = theme => ({
   },
 })
 
-class Leaderboard extends Component {
-  render() {
-    const { classes, users } = this.props
+const Leaderboard = ({ classes, users }) => {
+  const usersOrdered = Object.values(users).sort((a, b) => {
+    const aQuestionAnswerCount = a.questions.length + Object.keys(a.answers).length
+    const bQuestionAnswerCount = b.questions.length + Object.keys(b.answers).length
+    return bQuestionAnswerCount - aQuestionAnswerCount
+  })
 
-    const usersOrdered = Object.values(users).sort((a, b) => {
-      const aQuestionAnswerCount = a.questions.length + Object.keys(a.answers).length
-      const bQuestionAnswerCount = b.questions.length + Object.keys(b.answers).length
-      return bQuestionAnswerCount - aQuestionAnswerCount
-    })
+  return (
+    <div className={classes.root}>
+      <Paper className={classes.paper}>
+        <Table className={classes.table} aria-labelledby="tableTitle">
+          <TableHead>
+            <TableRow>
+              <CustomTableCell>
+                User
+              </CustomTableCell>
+              <CustomTableCell>
+                Questions asked
+              </CustomTableCell>
+              <CustomTableCell>
+                Questions answered
+              </CustomTableCell>
+            </TableRow>
+          </TableHead>
 
-    return (
-      <div className={classes.root}>
-          <Paper className={classes.paper}>
-            <Table className={classes.table} aria-labelledby="tableTitle">
-              <TableHead>
-                <TableRow>
-                  <CustomTableCell>
-                    User
-                  </CustomTableCell>
-                  <CustomTableCell>
-                    Questions asked
-                  </CustomTableCell>
-                  <CustomTableCell>
-                    Questions answered
-                  </CustomTableCell>
-                </TableRow>
-              </TableHead>
+          <TableBody>
+            {usersOrdered.map(user => (
+              <TableRow key={user.id} className={classes.row}>
+                <CustomTableCell>
+                  <Avatar src={user.avatarURL} className={classes.avatar} style={{ marginRight: 10 }} component='span' /> {user.name}
+                </CustomTableCell>
+                <CustomTableCell>
+                  {user.questions.length}
+                </CustomTableCell>
+                <CustomTableCell>
+                  {Object.keys(user.answers).length}
+                </CustomTableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </Paper>
 
-              <TableBody>
-              { usersOrdered.map(user => (
-                <TableRow key={user.id} className={classes.row}>
-                  <CustomTableCell>
-                    <Avatar src={user.avatarURL} className={classes.avatar} style={{ marginRight: 10 }} component='span' /> {user.name}
-                  </CustomTableCell>
-                  <CustomTableCell>
-                    {user.questions.length}
-                  </CustomTableCell>
-                  <CustomTableCell>
-                    {Object.keys(user.answers).length}
-                  </CustomTableCell>
-                </TableRow>
-              ))}
-              </TableBody>
-            </Table>
-          </Paper>
-
-        <Footer />
-      </div>
-    )
-  }
+      <Footer />
+    </div>
+  )
 }
 
 function mapStateToProps({ authedUserId, users }) {

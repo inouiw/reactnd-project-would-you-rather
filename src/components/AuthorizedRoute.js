@@ -1,8 +1,8 @@
-// see https://css-tricks.com/react-router-4/
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Route, Redirect } from 'react-router-dom'
 
+// Idea for Component from https://css-tricks.com/react-router-4/
 class AuthorizedRoute extends Component {
   render() {
     const { component: Comp, pending, logged, exact, path } = this.props
