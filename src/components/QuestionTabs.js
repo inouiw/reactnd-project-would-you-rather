@@ -22,8 +22,9 @@ function filterUnansweredQuestions(questions, currentUserId) {
 }
 
 const styles = theme => ({
-  grow: {
-    flexGrow: 1,
+  tabs: {
+    display: 'flex',
+    justifyContent: 'center',
   },
 })
 
@@ -47,11 +48,9 @@ class QuestionsAppBar extends Component {
     return (
       <Fragment>
         <AppBar position="static" color="default">
-          <Tabs value={selectedTab} onChange={this.handleChange}>
-            <div className={classes.grow} />
+          <Tabs value={selectedTab} onChange={this.handleChange} className={classes.tabs}>
             <Tab value='unansweredTab' label="Unanswered" />
             <Tab value='answeredTab' label="Answered" />
-            <div className={classes.grow} />
           </Tabs>
         </AppBar>
 

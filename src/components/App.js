@@ -24,9 +24,6 @@ const styles = theme => ({
 
 class App extends Component {
   componentDidMount() {
-    // see https://material-ui.com/style/typography/#migration-to-typography-v2
-    window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true
-
     this.props.dispatch(loadQuestions())
     this.props.dispatch(loadUsers())
 

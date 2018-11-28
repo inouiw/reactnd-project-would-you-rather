@@ -5,11 +5,9 @@ import Avatar from '@material-ui/core/Avatar'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
-import Tooltip from '@material-ui/core/Tooltip'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import TableSortLabel from '@material-ui/core/TableSortLabel'
 import Footer from './Footer'
 
 const CustomTableCell = withStyles(theme => ({
@@ -61,18 +59,10 @@ class Leaderboard extends Component {
                     User
                   </CustomTableCell>
                   <CustomTableCell>
-                    <Tooltip title="Sort by questions asked">
-                      <TableSortLabel>
-                        Questions asked
-                      </TableSortLabel>
-                    </Tooltip>
+                    Questions asked
                   </CustomTableCell>
                   <CustomTableCell>
-                    <Tooltip title="Sort by questions answered">
-                      <TableSortLabel>
-                        Questions answered
-                      </TableSortLabel>
-                    </Tooltip>
+                    Questions answered
                   </CustomTableCell>
                 </TableRow>
               </TableHead>
