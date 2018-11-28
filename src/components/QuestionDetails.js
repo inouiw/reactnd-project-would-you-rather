@@ -86,7 +86,7 @@ class QuestionDetails extends Component {
     const question = questions[questionId]
 
     if (!question) {
-      return <div>Error: There is no question with id: "{questionId}"</div>
+      return <div>404 Not Found: There is no question with id: "{questionId}"</div>
     }
 
     const isOption1 = question.optionOne.votes.includes(authedUserId)
