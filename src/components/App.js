@@ -29,10 +29,10 @@ class App extends Component {
 
     // For responsive design, elements that depend on clientWidth, clientHeight 
     // must rerender when the document is resized.
-    this.props.dispatch(setDocumentSize(document.documentElement.clientWidth, document.documentElement.clientHeight))
-    window.addEventListener('resize', () => {
+     window.addEventListener('resize', () => {
       this.props.dispatch(setDocumentSize(document.documentElement.clientWidth, document.documentElement.clientHeight))
     })
+    this.props.dispatch(setDocumentSize(document.documentElement.clientWidth, document.documentElement.clientHeight))
   }
 
   render() {

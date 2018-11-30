@@ -1,7 +1,8 @@
 import * as data from '../utils/_DATA'
-import { loadUsers } from './users'
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
+export const ADD_QUESTION = 'ADD_QUESTION'
+export const ANSWER_QUESTION = 'ANSWER_QUESTION'
 
 export function receiveQuestions(questions) {
   return {
@@ -18,16 +19,18 @@ export function loadQuestions() {
   }
 }
 
-export function saveQuestionAnswer(authedUserId, qid, answer) {
-  return (dispatch) => {
-    data._saveQuestionAnswer({ authedUser: authedUserId, qid, answer })
-    .then(() => dispatch(loadQuestions()) && dispatch(loadUsers()))
+export function addQuestion(question) {
+  return {
+    type: ADD_QUESTION,
+    question,
   }
 }
 
-export function saveQuestion(optionOneText, optionTwoText, authedUserId) {
-  return (dispatch) => {
-    data._saveQuestion({ optionOneText, optionTwoText, author: authedUserId })
-    .then(() => dispatch(loadQuestions()))
+export function addQuestionAnswer(authedUserId, qid, answer) {
+  return {
+    type: ANSWER_QUESTION,
+    authedUserId,
+    qid,
+    answer
   }
 }

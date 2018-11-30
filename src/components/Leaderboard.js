@@ -29,8 +29,6 @@ const styles = theme => ({
     justifyContent: 'center',
     alignItems: 'flex-start',
     marginTop: theme.spacing.unit * 3,
-
-
   },
   paper: {
     overflow: 'auto',

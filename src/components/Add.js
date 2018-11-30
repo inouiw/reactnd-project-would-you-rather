@@ -5,7 +5,7 @@ import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import Button from '@material-ui/core/Button'
-import { saveQuestion } from '../actions/questions'
+import { saveQuestion } from '../actions/shared'
 
 const styles = theme => ({
   root: {
